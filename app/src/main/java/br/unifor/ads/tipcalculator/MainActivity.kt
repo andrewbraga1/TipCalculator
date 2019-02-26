@@ -50,19 +50,19 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         mEditTextBill = findViewById(R.id.main_edittext_bill)
         mEditTextBill.setOnEditorActionListener { view, actionId, event ->
 
-            if (actionId == EditorInfo.IME_ACTION_DONE){
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val billValue = mEditTextBill.text.toString().toDouble()
                 var aux = casas(billValue);
                 val auxString = aux.toString()
-                val cifrao="R$"
+                val cifrao = "R$"
                 val billValueConcat = "$cifrao $auxString"
                 mEditTextBill.setText(billValueConcat);
 
                 //em valor
                 mTextViewFixedPercentageValue = findViewById(R.id.main_edittext_fixed_percentage_value)
-                mTextViewFixedPercentageValue.text = minTipValue(billValue).toString()
+                mTextViewFixedPercentageValue.text = valueturnString(minTipValue(billValue))
                 mTextViewFixedPercentageResult = findViewById(R.id.main_edittext_fixed_percentage_result)
-                mTextViewFixedPercentageResult.text = minTipResult(billValue).toString()
+                mTextViewFixedPercentageResult.text = valueturnString(minTipResult(billValue))
                 //mTextViewFixedPercentageResult.text = billValueConcat
             }
 
@@ -70,13 +70,12 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         }
 
 
-
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        mTextViewVariablePercentage.text = progress.toString()+"%"
-        mTextViewVariablePercentageValue.text = "R$"+ (billValue.toString().toDouble()*(progress.toDouble()/100))
-        mTextViewVariablePercentageResult.text = "R$" + (billValue.toString().toDouble()+ billValue.toString().toDouble()*(progress.toDouble()/100))
+        mTextViewVariablePercentage.text = progress.toString() + "%"
+        mTextViewVariablePercentageValue.text = "R$" + (billValue.toString().toDouble() * (progress.toDouble() / 100))
+        mTextViewVariablePercentageResult.text = "R$" + (billValue.toString().toDouble() + billValue.toString().toDouble() * (progress.toDouble() / 100))
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -84,19 +83,28 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
-        
+
     }
-    fun casas(v:Double ):Double{
-        val value = v/100
+
+    fun casas(v: Double): Double {
+        val value = v / 100
         return value
     }
-    fun minTipValue(v:Double):Double{
-       val minTip = v/10
+
+    fun minTipValue(v: Double): Double {
+        val minTip = v / 10
         return minTip
     }
-    fun minTipResult(v:Double):Double{
-        val Tip = v/10 + v
+
+    fun minTipResult(v: Double): Double {
+        val Tip = v / 10 + v
         return Tip
     }
 
+    fun valueturnString(v: Double): String {
+        val cifrao = "R$"
+        val double_string = v.toString()
+        val res = "&cifrao $double_string"
+        return res
+    }
 }
